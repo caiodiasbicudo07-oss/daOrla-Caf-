@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardápio — daOrla Café</title>
+<meta name="description" content="Cardápio do daOrla Café: café da manhã completo, sucos, lanches, sobremesas e fondue à noite. Cafeteria na orla de Itaipuaçu, Maricá RJ.">
+<link rel="canonical" href="https://www.daorlacafe.com.br/cardapio.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+/* ============================================================
+   daOrla Café — design tokens
+   Palette: creme #F7EFE3, espresso #3B2A20, canela #8C5A3B,
+            sunset #C1602E, maresia #2E7080
+   Type: 'Playfair Display' (headlines) + 'Nunito' (body, rounded/warm)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root{
+  --creme: #F7EFE3;
+  --creme-escuro: #EADFC7;
+  --papel: #FFFCF7;
+  --espresso: #3B2A20;
+  --texto: #3F2E22;
+  --canela: #8C5A3B;
+  --sunset: #C1602E;
+  --sunset-escuro: #A54F23;
+  --maresia: #2E7080;
+  --maresia-clara: #6FAFBB;
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Nunito', -apple-system, sans-serif;
+
+  --max-width: 1160px;
+  --radius: 14px;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+body{
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--texto);
+  background: var(--creme);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4{
+  font-family: var(--serif);
+  color: var(--espresso);
+  margin: 0 0 0.4em;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+h1{ font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 600; }
+h2{ font-size: clamp(1.8rem, 4vw, 2.7rem); }
+h3{ font-size: 1.3rem; }
+
+p{ margin: 0 0 1em; max-width: 62ch; }
+a{ color: inherit; text-decoration: none; }
+img{ max-width: 100%; display: block; }
+
+.container{ max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 0.96rem;
+  padding: 14px 28px;
+  border-radius: 100px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn:focus-visible{ outline: 3px solid var(--sunset); outline-offset: 3px; }
+
+.btn-primary{ background: var(--sunset); color: var(--papel); }
+.btn-primary:hover{ background: var(--sunset-escuro); }
+
+.btn-outline{ background: transparent; border-color: var(--papel); color: var(--papel); }
+.btn-outline:hover{ background: rgba(255,252,247,0.14); }
+
+.btn-outline-dark{ background: transparent; border-color: var(--espresso); color: var(--espresso); }
+.btn-outline-dark:hover{ background: var(--espresso); color: var(--papel); }
+
+/* ---------- Header ---------- */
+.site-header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 32px;
+  transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+}
+.site-header.is-solid{
+  background: rgba(59, 42, 32, 0.95);
+  backdrop-filter: blur(6px);
+  padding: 14px 32px;
+  box-shadow: 0 4px 22px rgba(0,0,0,0.14);
+}
+.logo{
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--papel);
+}
+.logo span{ color: var(--sunset); font-style: normal; }
+
+.nav-links{ display: flex; align-items: center; gap: 30px; list-style: none; margin: 0; padding: 0; }
+.nav-links a{ color: var(--papel); font-size: 0.96rem; font-weight: 700; position: relative; padding: 4px 0; }
+.nav-links a::after{
+  content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px;
+  background: var(--sunset); transition: width var(--transition);
+}
+.nav-links a:hover::after, .nav-links a.is-active::after{ width: 100%; }
+
+.nav-toggle{ display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+.nav-toggle span{ display: block; width: 26px; height: 2px; background: var(--papel); margin: 6px 0; transition: transform var(--transition); }
+
+@media (max-width: 860px){
+  .nav-toggle{ display: block; }
+  .nav-links{
+    position: fixed; top: 0; right: 0; height: 100vh; width: min(78vw, 340px);
+    background: var(--espresso); flex-direction: column; justify-content: center;
+    align-items: flex-start; padding: 40px; gap: 26px;
+    transform: translateX(100%); transition: transform var(--transition);
+  }
+  .nav-links.is-open{ transform: translateX(0); }
+  .nav-links a{ font-size: 1.2rem; }
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(160deg, var(--espresso) 0%, var(--canela) 100%);
+  overflow: hidden;
+  padding-bottom: 110px;
+}
+.hero-bg{
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1800&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 60%;
+  opacity: 0.3;
+  mix-blend-mode: luminosity;
+}
+.hero-content{
+  position: relative; z-index: 2; color: var(--papel); max-width: 700px; padding: 0 32px;
+  opacity: 0; animation: rise 1s ease-out 0.2s forwards;
+}
+@keyframes rise{ from{ opacity:0; transform: translateY(28px);} to{ opacity:1; transform: translateY(0);} }
+.hero-eyebrow{ color: var(--sunset); font-family: var(--serif); font-style: italic; font-size: 1.1rem; margin-bottom: 14px; }
+.hero h1{ color: var(--papel); margin-bottom: 20px; }
+.hero p{ color: rgba(255,252,247,0.86); font-size: 1.1rem; max-width: 50ch; }
+.hero-actions{ display: flex; gap: 16px; margin-top: 28px; flex-wrap: wrap; }
+
+.curve-divider{
+  position: absolute; bottom: -1px; left: 0; right: 0; z-index: 3; line-height: 0;
+}
+.curve-divider svg{ width: 100%; height: 70px; display: block; }
+
+/* ---------- Sections ---------- */
+section{ padding: 100px 0; position: relative; }
+.section-alt{ background: var(--papel); }
+.section-dark{ background: var(--espresso); color: var(--papel); }
+.section-dark h2, .section-dark h3{ color: var(--papel); }
+.section-dark p{ color: rgba(255,252,247,0.82); }
+
+.eyebrow-label{ font-family: var(--serif); font-style: italic; color: var(--sunset-escuro); font-size: 1.05rem; margin-bottom: 10px; display: block; }
+.section-dark .eyebrow-label{ color: var(--sunset); }
+
+.section-head{ max-width: 640px; margin-bottom: 52px; }
+.section-head.center{ margin-left: auto; margin-right: auto; text-align: center; }
+
+/* ---------- Sobre grid ---------- */
+.sobre-grid{ display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items: center; }
+.sobre-figure img{ border-radius: var(--radius); width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.sobre-stats{ display: flex; gap: 36px; margin-top: 32px; padding-top: 26px; border-top: 1px solid rgba(59,42,32,0.14); flex-wrap: wrap; }
+.stat-num{ font-family: var(--serif); font-size: 2rem; color: var(--maresia); display: block; }
+.stat-label{ font-size: 0.88rem; opacity: 0.75; }
+
+@media (max-width: 860px){ .sobre-grid{ grid-template-columns: 1fr; gap: 36px; } }
+
+/* ---------- Cards ---------- */
+.card-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 26px; }
+.menu-card{
+  background: var(--papel); border: 1px solid rgba(59,42,32,0.1); border-radius: var(--radius);
+  padding: 30px; transition: border-color var(--transition), transform var(--transition);
+}
+.menu-card:hover{ border-color: var(--sunset); transform: translateY(-4px); }
+.menu-card-icon{ font-size: 1.7rem; margin-bottom: 12px; display: block; }
+.menu-item-list{ list-style: none; margin: 16px 0 0; padding: 0; }
+.menu-item-list li{ display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed rgba(59,42,32,0.16); font-size: 0.95rem; }
+.menu-item-list li:last-child{ border-bottom: none; }
+.menu-item-list .item-name{ font-weight: 700; }
+.menu-item-list .item-desc{ display: block; font-weight: 400; opacity: 0.72; font-size: 0.85rem; margin-top: 2px; }
+.menu-item-list .item-price{ font-weight: 700; color: var(--sunset-escuro); white-space: nowrap; }
+
+/* ---------- Gallery ---------- */
+.gallery-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.gallery-grid a{ display: block; overflow: hidden; border-radius: var(--radius); position: relative; aspect-ratio: 4/3; }
+.gallery-grid img{ width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.gallery-grid a:hover img{ transform: scale(1.08); }
+@media (max-width: 860px){ .gallery-grid{ grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+
+/* ---------- Localização ---------- */
+.local-grid{ display: grid; grid-template-columns: 0.85fr 1.15fr; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(59,42,32,0.12); }
+.local-info{ background: var(--papel); padding: 44px; }
+.local-info dl{ margin: 0; }
+.local-info dt{ font-family: var(--serif); font-style: italic; color: var(--maresia); margin-top: 24px; font-size: 1rem; }
+.local-info dt:first-child{ margin-top: 0; }
+.local-info dd{ margin: 6px 0 0; font-size: 0.97rem; }
+.local-info .horario-row{ display: flex; justify-content: space-between; max-width: 320px; padding: 6px 0; font-size: 0.93rem; }
+.local-map iframe{ width: 100%; height: 100%; min-height: 400px; border: 0; display: block; }
+@media (max-width: 860px){ .local-grid{ grid-template-columns: 1fr; } .local-map iframe{ min-height: 300px; } }
+
+/* ---------- Social ---------- */
+.social-row{ display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.social-pill{
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 100px;
+  border: 1px solid rgba(59,42,32,0.25); font-size: 0.9rem; transition: border-color var(--transition), background var(--transition);
+}
+.social-pill:hover{ border-color: var(--sunset); background: rgba(193,96,46,0.08); }
+
+/* ---------- Form ---------- */
+.form-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-grid .full{ grid-column: 1 / -1; }
+.field label{ display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+.field input, .field select, .field textarea{
+  width: 100%; padding: 13px 16px; border-radius: 10px; border: 1.5px solid rgba(59,42,32,0.2);
+  background: var(--papel); font-family: var(--sans); font-size: 0.96rem; color: var(--texto); transition: border-color var(--transition);
+}
+.field input:focus, .field select:focus, .field textarea:focus{ outline: none; border-color: var(--maresia); }
+.field textarea{ resize: vertical; min-height: 110px; }
+.form-note{ font-size: 0.84rem; opacity: 0.7; margin-top: 6px; }
+.form-status{ margin-top: 16px; font-weight: 700; display: none; }
+.form-status.is-visible{ display: block; }
+@media (max-width: 640px){ .form-grid{ grid-template-columns: 1fr; } }
+
+/* ---------- CTA band ---------- */
+.cta-band{ background: var(--sunset); color: var(--papel); padding: 64px 0; text-align: center; }
+.cta-band h2{ color: var(--papel); }
+
+/* ---------- Footer ---------- */
+footer{ background: var(--espresso); color: rgba(255,252,247,0.75); padding: 56px 0 28px; }
+.footer-grid{ display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,252,247,0.14); }
+.footer-grid h4{ color: var(--papel); font-size: 1rem; margin-bottom: 14px; }
+.footer-grid ul{ list-style: none; margin: 0; padding: 0; }
+.footer-grid li{ margin-bottom: 10px; }
+.footer-grid a:hover{ color: var(--sunset); }
+.footer-bottom{ display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 22px; font-size: 0.84rem; }
+@media (max-width: 700px){ .footer-grid{ grid-template-columns: 1fr; } }
+
+/* ---------- WhatsApp float ---------- */
+.whatsapp-float{
+  position: fixed; bottom: 26px; right: 26px; z-index: 200; width: 60px; height: 60px; border-radius: 50%;
+  background: #25D366; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.28); transition: transform var(--transition);
+}
+.whatsapp-float:hover{ transform: scale(1.08); }
+.whatsapp-float svg{ width: 30px; height: 30px; }
+
+/* ---------- Page hero ---------- */
+.page-hero{ background: var(--espresso); color: var(--papel); padding: 180px 0 84px; text-align: left; }
+.page-hero h1{ color: var(--papel); }
+.page-hero .eyebrow-label{ color: var(--sunset); }
+
+/* ---------- Reveal ---------- */
+.reveal{ opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.is-visible{ opacity: 1; transform: translateY(0); }
+
+/* ---------- Skip link ---------- */
+.skip-link{ position: absolute; left: -9999px; top: 0; background: var(--sunset); color: var(--papel); padding: 12px 20px; z-index: 999; font-weight: 800; }
+.skip-link:focus{ left: 16px; top: 16px; }
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="site-header">
+  <a href="index.html" class="logo">da<span>Orla</span> Café</a>
+  <nav aria-label="Navegação principal">
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="cardapio.html">Cardápio</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="contato.html#form" class="btn btn-primary" style="padding:10px 22px;">Reservar mesa</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <div class="container reveal">
+      <span class="eyebrow-label">Cardápio</span>
+      <h1>Café, sol & maresia, o dia inteiro.</h1>
+      <p style="color: rgba(255,252,247,0.82); max-width: 54ch;">Preços de referência — confirme valores atualizados com a equipe pelo WhatsApp.</p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="card-grid reveal">
+
+        <div class="menu-card">
+          <span class="menu-card-icon">☕</span>
+          <h3>Cafés & Bebidas</h3>
+          <ul class="menu-item-list">
+            <li><span class="item-name">Café coado</span></li>
+            <li><span class="item-name">Cappuccino cremoso</span></li>
+            <li><span class="item-name">Café gelado</span></li>
+            <li><span class="item-name">Sucos naturais<span class="item-desc">variados, feitos na hora</span></span></li>
+            <li><span class="item-name">Água aromatizada</span></li>
+            <li><span class="item-name">Chocolate quente</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-card">
+          <span class="menu-card-icon">🥐</span>
+          <h3>Café da Manhã</h3>
+          <ul class="menu-item-list">
+            <li><span class="item-name">Café da manhã completo</span></li>
+            <li><span class="item-name">Pães e frios variados</span></li>
+            <li><span class="item-name">Tapiocas<span class="item-desc">doces e salgadas</span></span></li>
+            <li><span class="item-name">Ovos e omeletes</span></li>
+            <li><span class="item-name">Frutas da estação</span></li>
+            <li><span class="item-name">Panquecas</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-card">
+          <span class="menu-card-icon">🥪</span>
+          <h3>Lanches</h3>
+          <ul class="menu-item-list">
+            <li><span class="item-name">Sanduíches naturais</span></li>
+            <li><span class="item-name">Sanduíches quentes</span></li>
+            <li><span class="item-name">Salgados assados</span></li>
+            <li><span class="item-name">Wraps</span></li>
+            <li><span class="item-name">Caldinho<span class="item-desc">nos dias mais frios</span></span></li>
+          </ul>
+        </div>
+
+        <div class="menu-card">
+          <span class="menu-card-icon">🍰</span>
+          <h3>Sobremesas</h3>
+          <ul class="menu-item-list">
+            <li><span class="item-name">Bolos caseiros</span></li>
+            <li><span class="item-name">Tortas doces</span></li>
+            <li><span class="item-name">Brownies</span></li>
+            <li><span class="item-name">Sorvetes</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-card">
+          <span class="menu-card-icon">🧀</span>
+          <h3>Fondue à Noite</h3>
+          <ul class="menu-item-list">
+            <li><span class="item-name">Fondue de queijo</span></li>
+            <li><span class="item-name">Fondue de chocolate</span></li>
+            <li><span class="item-name">Harmonização com vinho</span></li>
+            <li><span class="item-name">Acompanhamentos<span class="item-desc">pães, frutas, legumes</span></span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head center reveal" style="max-width: 700px;">
+        <span class="eyebrow-label">Formas de pagamento</span>
+        <h2>Facilidade na hora de pagar</h2>
+        <p style="margin: 0 auto;">Aceitamos dinheiro, Pix, cartão de crédito e débito, além de vale-refeição e vale-alimentação: Mumbuca, Alelo, Ticket Restaurante, Ticket Flex e Sodexo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container reveal">
+      <h2>Quer garantir sua mesa?</h2>
+      <p style="margin: 0 auto 24px; max-width: 46ch; color: rgba(255,252,247,0.92);">Chame a gente no WhatsApp e combine o melhor horário pra você.</p>
+      <a href="https://wa.me/5521977192952?text=Ol%C3%A1!%20Quero%20reservar%20uma%20mesa%20no%20daOrla%20Caf%C3%A9." target="_blank" rel="noopener" class="btn btn-outline">Reservar pelo WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<a class="whatsapp-float" href="https://wa.me/5521977192952?text=Ol%C3%A1!%20Quero%20reservar%20uma%20mesa%20no%20daOrla%20Caf%C3%A9." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.29.638 4.43 1.744 6.256L4 29l7.94-1.687A11.94 11.94 0 0016 27c6.628 0 12-5.373 12-12S22.629 3 16.001 3zm0 21.6c-1.87 0-3.62-.52-5.113-1.424l-.367-.218-4.71 1.001 1.02-4.594-.24-.377A9.55 9.55 0 016.4 15c0-5.302 4.299-9.6 9.601-9.6 5.301 0 9.6 4.298 9.6 9.6 0 5.301-4.299 9.6-9.6 9.6zm5.273-7.19c-.29-.145-1.71-.844-1.975-.94-.264-.097-.457-.145-.649.145-.192.29-.746.94-.914 1.133-.168.193-.336.217-.626.072-.29-.145-1.224-.451-2.331-1.437-.862-.769-1.444-1.717-1.613-2.007-.168-.29-.018-.446.127-.59.13-.13.29-.338.434-.507.145-.169.193-.29.29-.482.097-.193.048-.362-.024-.507-.072-.145-.649-1.564-.89-2.14-.234-.564-.472-.488-.649-.497l-.553-.01c-.193 0-.507.072-.773.362-.264.29-1.01.987-1.01 2.407s1.034 2.79 1.178 2.983c.145.193 2.035 3.107 4.93 4.357.689.297 1.226.474 1.645.607.691.22 1.32.189 1.818.115.554-.083 1.71-.699 1.951-1.374.24-.676.24-1.254.168-1.374-.072-.121-.264-.193-.554-.338z"/></svg>
+</a>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo" style="display:inline-block; margin-bottom:14px;">da<span>Orla</span> Café</a>
+        <p style="max-width: 40ch; font-size: 0.92rem;">Cafeteria na orla de Itaipuaçu, Maricá RJ. Café, sol & maresia desde 2022.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cardapio.html">Cardápio</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5521977192952" target="_blank" rel="noopener">(21) 97719-2952</a></li>
+          <li><a href="https://instagram.com/daorlacafe" target="_blank" rel="noopener">@daorlacafe</a></li>
+          <li>Av. Zumbi dos Palmares, Barroco — Itaipuaçu, Maricá</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 daOrla Café. Todos os direitos reservados.</span>
+      <span>Café, sol & maresia.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Espaço Casa da Praia — comportamento do site
+(function () {
+  'use strict';
+
+  // Header sólido ao rolar
+  var header = document.querySelector('.site-header');
+  function onScroll() {
+    if (!header) return;
+    if (window.scrollY > 40) {
+      header.classList.add('is-solid');
+    } else {
+      header.classList.remove('is-solid');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Menu mobile
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', function () {
+      var isOpen = links.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        links.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Revelação suave ao rolar (uma única categoria de efeito, sem exagero)
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && revealEls.length) {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  // Formulário de contato -> monta mensagem e abre WhatsApp
+  var form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nome = form.nome.value.trim();
+      var telefone = form.telefone.value.trim();
+      var assunto = form.assunto.value;
+      var mensagem = form.mensagem.value.trim();
+
+      var texto = 'Olá! Meu nome é ' + nome + '.' +
+        (assunto ? ' Assunto: ' + assunto + '.' : '') +
+        (mensagem ? ' Mensagem: ' + mensagem : '') +
+        ' Meu telefone: ' + telefone;
+
+      var numeroWhatsApp = '5521977192952';
+      var url = 'https://wa.me/' + numeroWhatsApp + '?text=' + encodeURIComponent(texto);
+
+      var status = document.getElementById('form-status');
+      if (status) {
+        status.textContent = 'Abrindo o WhatsApp para você enviar sua mensagem…';
+        status.classList.add('is-visible');
+      }
+      window.open(url, '_blank');
+      form.reset();
+    });
+  }
+
+  // Marca o link ativo no menu
+  var current = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (href === current || (current === '' && href === 'index.html')) {
+      a.classList.add('is-active');
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
